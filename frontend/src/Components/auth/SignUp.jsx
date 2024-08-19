@@ -60,17 +60,18 @@ const SignUp = ({ button, heading, user_id }) => {
     e.preventDefault();
     console.log(priestFormData.Phone)
     if(priestFormData.Phone && !isVerify){
-      console.log("Jk")
+      
       toast.error("Please Verify the Phone")
        
     }
-   else if (isEdit) {
+    else if (isEdit) {
+     
       // profile edit code
       setLoading(true);
       phone&&(priestFormData.Phone=phone.slice(2,))
       const res = await updateProfile(priestFormData);
       setLoading(false);
-      if (res.success) {
+      if (res && res.success) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -82,7 +83,7 @@ const SignUp = ({ button, heading, user_id }) => {
       }
     } 
     // new User registration if phone is verified
-    else if(isVerify) {
+    else  {
       setLoading(true);
       
       console.log(priestFormData);
@@ -170,7 +171,7 @@ const SignUp = ({ button, heading, user_id }) => {
                   priestFormData.Phone = value
                 } }
               />
-              <button disabled={isOtpSent} className="otp-btn" onClick={sendOtp}>
+              <button type="button" disabled={isOtpSent} className="otp-btn" onClick={sendOtp}>
                 sendOTP
               </button>
             </div>
@@ -186,7 +187,7 @@ const SignUp = ({ button, heading, user_id }) => {
                   placeholder="Enter 6 Digit OTP"
                   onChange={(e) => setOTP(e.target.value)}
                 />{" "}
-                <button className="otp-btn" disabled={!otp} onClick={verfiy}>verfiyOTP</button>
+                <button type="button" className="otp-btn" disabled={!otp} onClick={verfiy}>verfiyOTP</button>
               </div>
             ) : (
               ""

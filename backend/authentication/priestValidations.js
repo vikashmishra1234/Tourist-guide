@@ -4,14 +4,8 @@ const { z } = require('zod');
 const priestValidationSchema = z.object({
   Name: z.string().min(1, "Name is required."),
   Password: z.string().min(1, "Password is required."),
-  Phone: z.number({
-    required_error: "Phone is required.",
-    invalid_type_error: "Phone must be a number.",
-  }),
-  Whatsapp: z.number({
-    required_error: "Whatsapp is required.",
-    invalid_type_error: "Whatsapp must be a number.",
-  }),
+  Phone: z.string(),
+ Whatsapp:z.string(),
   Invites: z.string().optional(),
   Bio: z.string().min(1, "Bio is required."),
   Profile: z.string().optional(),
