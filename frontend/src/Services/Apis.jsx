@@ -4,8 +4,8 @@ import { useState } from "react";
 
 // Set the base URL once
 const api = axios.create({
-    baseURL: 'http://localhost:5000', // Update to your live URL if needed
-    // baseURL: 'https://tourist-guide-ha95.onrender.com'
+    // baseURL: 'http://localhost:5000', // Update to your live URL if needed
+    baseURL: 'https://tourist-guide-ha95.onrender.com'
 });
 
 const getAuthConfig = () => ({
