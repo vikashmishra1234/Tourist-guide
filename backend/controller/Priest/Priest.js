@@ -3,10 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Feedback = require('../../models/Priest/Feedback');
 const NodeCache = require( "node-cache" );
-const myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
+const redis = require('../../redisConfig.js')
 
 // JWT secret key
 const JWT_SECRET = 'vikash mishra'; // Replace with your actual secret key
+
 
 exports.priestRegistration = async (req, res) => {
     try {
@@ -33,6 +34,12 @@ exports.priestRegistration = async (req, res) => {
         const token = jwt.sign({ id: newUser._id }, JWT_SECRET);
 
         // Respond with success message and token
+        const cachedPriests = await redis.get('priests');
+        if (cachedPriests) {
+            const priests = JSON.parse(cachedPriests);
+            priests.push(newUser); // Append the newly registered priest
+            await redis.set('priests', JSON.stringify(priests)); // Update the cache
+        }
         res.status(201).json({
             newUser,
            success: true,
@@ -44,23 +51,36 @@ exports.priestRegistration = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
-exports.getPriest=async(req,res)=>{
+exports.getPriest = async (req, res) => {
     try {
-        if(myCache.get("priest")){
-            const priest = myCache.get("priest");
-            return res.status(201).json({priest:priest,success:true});
+        // Use the priest's ID to create a unique cache key
+        const cacheKey = `priest:${req.user.id}`;
+        const cachedPriest = await redis.get(cacheKey);
+
+        if (cachedPriest) {
+            // Return the cached data if available
+            return res.status(200).json({ priest: JSON.parse(cachedPriest), success: true });
         }
-        const priest =await Priest.findById(req.user.id);
-        if(!priest){
-            return res.status(404).json({success:false,error:'User Not Found'});
+
+        // Fetch the priest data from the database
+        const priest = await Priest.findById(req.user.id);
+        
+        if (!priest) {
+            return res.status(404).json({ success: false, error: 'User Not Found' });
         }
-        myCache.set("priest",priest);
-        res.status(201).json({priest:priest,success:true});
+
+        // Cache the retrieved data with the unique key
+        await redis.set(cacheKey, JSON.stringify(priest));
+
+        // Return the retrieved data
+        res.status(200).json({ priest, success: true });
     } catch (error) {
-        console.log(error.message);
-        return res.status(500).json({error:'Server Error',success:false});
+        // Log the error and respond with a server error message
+        console.error('Error in getPriest:', error.message);
+        res.status(500).json({ error: 'Server Error', success: false });
     }
-}
+};
+
 
 exports.updatePriest = async (req, res) => {
     try {
@@ -79,7 +99,7 @@ exports.updatePriest = async (req, res) => {
         if (!updatePriest) {
             return res.status(404).json({ error: 'Priest not found', success: false });
         }
-        myCache.del("priests")
+        await redis.del("priests")
         res.status(201).json({
             message: 'Profile Update Successful',
             updatePriest,
@@ -136,7 +156,7 @@ exports.deletePriest = async (req, res) => {
       if (!deleted) {
         return res.status(404).json({ success: false, error: 'User not found' });
       }
-      myCache.del("priests")
+      await redis.del("priests")
       res.status(200).json({ success: true, message: 'User deleted successfully' });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
@@ -166,23 +186,33 @@ exports.deletePriest = async (req, res) => {
         res.status(500).json({error:'Server Error'})
     }
   }
-  exports.getPriests = async(req,res)=>{
+  exports.getPriests = async (req, res) => {
     try {
-        if(myCache.get("priests")){
-            const priests = myCache.get("priests")
-            return res.status(201).json({success:true,priests});
+        // Retrieve data from Redis
+        const cachedPriests = await redis.get('priests');
+        
+        // if (cachedPriests) {
+        //     return res.status(200).json({ success: true, priests: JSON.parse(cachedPriests) });
+        // }
 
-        }
+        
         const priests = await Priest.find({});
-        if(priests.length===0){
-            return res.status(404).json({error:'No Priest Found'});
+        
+        if (priests.length === 0) {
+            return res.status(404).json({ success: false, error: 'No Priest Found' });
         }
-        myCache.set("priests",priests);
-        res.status(201).json({success:true,priests});
+
+       
+        // await redis.set('priests', JSON.stringify(priests));
+
+        
+        res.status(200).json({ success: true, priests });
+
     } catch (error) {
-        res.status(500).json({error:'Server Error'})
+        console.error(error.message);
+        res.status(500).json({ success: false, error: 'Server Error' });
     }
-  }
+};
 
   exports.phoneExits=async(req,res)=>{
     try {
