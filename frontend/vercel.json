@@ -6,10 +6,6 @@
             "dest":"/"
         },
         {
-            "src":"/register/user",
-            "dest":"/"
-        },
-        {
             "src":"/user/edit",
             "dest":"/"
         },
@@ -22,11 +18,11 @@
             "dest":"/"
         },
         {
-            "src":"/about",
+            "src":"/user",
             "dest":"/"
         },
         {
-            "src":"/administration",
+            "src":"/register",
             "dest":"/"
         }
     ]
