@@ -2,6 +2,8 @@ const Priest = require('../../models/Priest/Registration')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Feedback = require('../../models/Priest/Feedback');
+const NodeCache = require( "node-cache" );
+const myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 
 // JWT secret key
 const JWT_SECRET = 'vikash mishra'; // Replace with your actual secret key
@@ -44,11 +46,15 @@ exports.priestRegistration = async (req, res) => {
 };
 exports.getPriest=async(req,res)=>{
     try {
+        if(myCache.get("priest")){
+            const priest = myCache.get("priest");
+            return res.status(201).json({priest:priest,success:true});
+        }
         const priest =await Priest.findById(req.user.id);
         if(!priest){
             return res.status(404).json({success:false,error:'User Not Found'});
         }
-    
+        myCache.set("priest",priest);
         res.status(201).json({priest:priest,success:true});
     } catch (error) {
         console.log(error.message);
@@ -73,7 +79,7 @@ exports.updatePriest = async (req, res) => {
         if (!updatePriest) {
             return res.status(404).json({ error: 'Priest not found', success: false });
         }
-
+        myCache.del("priests")
         res.status(201).json({
             message: 'Profile Update Successful',
             updatePriest,
@@ -130,7 +136,7 @@ exports.deletePriest = async (req, res) => {
       if (!deleted) {
         return res.status(404).json({ success: false, error: 'User not found' });
       }
-  
+      myCache.del("priests")
       res.status(200).json({ success: true, message: 'User deleted successfully' });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
@@ -162,10 +168,16 @@ exports.deletePriest = async (req, res) => {
   }
   exports.getPriests = async(req,res)=>{
     try {
+        if(myCache.get("priests")){
+            const priests = myCache.get("priests")
+            return res.status(201).json({success:true,priests});
+
+        }
         const priests = await Priest.find({});
         if(priests.length===0){
             return res.status(404).json({error:'No Priest Found'});
         }
+        myCache.set("priests",priests);
         res.status(201).json({success:true,priests});
     } catch (error) {
         res.status(500).json({error:'Server Error'})

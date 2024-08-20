@@ -30,5 +30,5 @@ const priestSchema= mongoose.Schema({
         type:String,
     }
 });
-
+priestSchema.index({ Phone: 1 });
 module.exports = mongoose.model('priest',priestSchema);

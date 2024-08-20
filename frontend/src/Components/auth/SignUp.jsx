@@ -46,7 +46,8 @@ const SignUp = ({ button, heading, user_id }) => {
       .then((resp) => {
         setLoading(false);
         setProfile(resp.data.url);
-        priest.Profile = resp.data.url;
+        priestFormData.Profile = resp.data.url;
+        
       })
       .catch((err) => {
         setLoading(false);
@@ -86,7 +87,7 @@ const SignUp = ({ button, heading, user_id }) => {
     else  {
       setLoading(true);
       
-      console.log(priestFormData);
+     
       const res = await registration(priestFormData);
       setLoading(false);
       if (res.success) {
@@ -149,8 +150,9 @@ const SignUp = ({ button, heading, user_id }) => {
    }
   };
   return (
-    <div className="login-container">
+    <>
       {loading && <Loading />}
+    <div className="login-container">
       <form action="" className="login-form" onSubmit={handleSubmit}>
         <div className="signup">
           <div>{isEdit ? <h3>{heading}</h3> : <h3>Register</h3>}</div>
@@ -242,6 +244,7 @@ const SignUp = ({ button, heading, user_id }) => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 

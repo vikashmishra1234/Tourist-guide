@@ -32,6 +32,22 @@ h2{
     padding-bottom: 18px;
     color: white;
 }
+.loading{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(0 0 0 / 22%);
+  z-index: 100;
+}
+.load{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 19px;
+}
 @media screen and (max-width:600px){
   h2{
     font-size: 21px;

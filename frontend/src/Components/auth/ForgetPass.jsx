@@ -8,6 +8,7 @@ import { phoneExit, priestLogin } from '../../Services/Apis';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Loading } from '../Loader';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie'
 
 const ForgetPass = () => {
   const [phone, setPhone] = useState('');
@@ -30,7 +31,7 @@ const sendOtp = async()=>{
     
    setUser(confirmation);
 
-   alert("OTP has been sent successfully");
+   toast.success('OTP has been sent')
    setSent(true)
    setSend(true)
   } catch (error) {
@@ -47,13 +48,13 @@ const verfiyOtp=async()=>{
       const res = await priestLogin({Phone:phone});
       if(res){
         Cookies.set("priestToken",res.token)
-        alert(res.message)
+        toast.success(res.message)
         Navigate('/user');
       }
     }
     
   } catch (error) {
-    alert(error.message)
+    toast.error(error.message)
     console.log(error.message);
   }
 
