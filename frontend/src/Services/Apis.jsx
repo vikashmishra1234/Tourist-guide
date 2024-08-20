@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 // Set the base URL once
 const api = axios.create({
@@ -20,7 +21,8 @@ const handleError = (error) => {
     }
     else if (error.response) {
         console.error('Error message:', error.response.data.error);
-        // alert(error.response.data.error);
+        toast.error(error.response.data.error)
+        
     } else {
         console.error('Unexpected error:', error.message);
     }

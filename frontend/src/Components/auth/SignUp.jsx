@@ -110,6 +110,11 @@ const SignUp = ({ button, heading, user_id }) => {
 
   //sending an otp to the phone number
   const sendOtp = async () => {
+    console.log(priestFormData.Phone)
+    if(!priestFormData.Phone || priestFormData.Phone.length!=12){
+      toast.error("Please Enter an valid Phone Number");
+      return ;
+    }
     try {
       const phoneNumber = "+" + priestFormData.Phone;
       const recapta = new RecaptchaVerifier(auth, "recapta", {

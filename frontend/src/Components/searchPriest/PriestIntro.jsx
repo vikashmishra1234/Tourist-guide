@@ -32,7 +32,7 @@ const PriestIntro = ({priest,profile}) => {
                 {priest.Bio}
             </div>
             <div>
-            <FaPhoneAlt color='blue' size={'21px'} /> <span>+91 {priest.Phone}</span>
+            <FaPhoneAlt color='blue' size={'21px'} /> <span>+91 {priest.Phone.slice(2,)}</span>
             </div>
             <div>
                 <span>Invites:{priest.Invites}</span>

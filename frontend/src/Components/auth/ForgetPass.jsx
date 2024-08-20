@@ -7,6 +7,7 @@ import { RecaptchaVerifier } from 'firebase/auth';
 import { phoneExit, priestLogin } from '../../Services/Apis';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Loading } from '../Loader';
+import { toast } from 'react-toastify';
 
 const ForgetPass = () => {
   const [phone, setPhone] = useState('');
@@ -18,8 +19,8 @@ const ForgetPass = () => {
   const Navigate = useNavigate();
 const sendOtp = async()=>{
   const res = await phoneExit(phone);
-  if(!res&&!res.success){
-    alert("Phone No. Does Not Exits");
+  if(!res){
+    toast.error("Phone Does Not Exits");
     return;
   }
   try {

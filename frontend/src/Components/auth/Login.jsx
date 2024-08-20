@@ -18,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
-    const res = await priestLogin({ Phone, Password });
+    const res = await priestLogin({ Phone:'91'+Phone, Password });
     setLoading(false)
     if(res){
       Cookies.set("priestToken",res.token)
