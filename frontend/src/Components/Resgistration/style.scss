@@ -193,7 +193,9 @@ a {
 @media screen and (max-width: 600px) {
   .profile-wrapper {
     .profile-container {
-        height: 350px;
+      height: fit-content;
+      padding-top: 25px;
+      padding-bottom: 21px;
      .profile-image{
         width: 95%;
         img{
