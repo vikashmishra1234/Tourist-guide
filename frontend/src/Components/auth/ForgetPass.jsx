@@ -43,8 +43,8 @@ const verfiyOtp=async()=>{
     
     const data = await user.confirm(otp);
     if(data.user.phoneNumber){
-      const phones = phone.slice(2,);
-      const res = await priestLogin({Phone:phones});
+      
+      const res = await priestLogin({Phone:phone});
       localStorage.setItem("priestToken",res.token)
       Navigate('/register/user');
       alert(res.message)
