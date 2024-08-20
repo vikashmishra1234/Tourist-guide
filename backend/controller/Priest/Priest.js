@@ -174,7 +174,7 @@ exports.deletePriest = async (req, res) => {
 
   exports.phoneExits=async(req,res)=>{
     try {
-        const Phone = req.query.Phone.slice(2,);
+        const Phone = req.query.Phone
         const phone = await Priest.findOne({Phone});
         
         if(!phone){
