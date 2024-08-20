@@ -45,9 +45,11 @@ const verfiyOtp=async()=>{
     if(data.user.phoneNumber){
       
       const res = await priestLogin({Phone:phone});
-      localStorage.setItem("priestToken",res.token)
-      Navigate('/register/user');
-      alert(res.message)
+      if(res){
+        Cookies.set("priestToken",res.token)
+        alert(res.message)
+        Navigate('/user');
+      }
     }
     
   } catch (error) {
