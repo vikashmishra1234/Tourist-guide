@@ -16,8 +16,8 @@ const Cards = ({ data }) => {
         <div className="card-discription">{data.discription}</div>
         {
           data.winter?<div>
-            <p style={{margin:"0",fontWeight:'bold',fontSize:'17px'}}>Winter<span style={{fontWeight:'300'}}>: {data.winter}</span></p>
-            <p style={{margin:"",fontWeight:'bold',fontSize:'17px'}}>Summer: <span style={{fontWeight:'300'}}>{data.summer}</span></p>
+            <p style={{margin:"0",fontWeight:'bold',fontSize:'19px'}}>Winter<span style={{fontWeight:'300'}}>: {data.winter}</span></p>
+            <p style={{margin:"",fontWeight:'bold',fontSize:'19px'}}>Summer: <span style={{fontWeight:'300'}}>{data.summer}</span></p>
           </div>:''
         }
         <div className="card-button">
