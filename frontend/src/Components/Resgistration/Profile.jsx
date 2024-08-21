@@ -58,7 +58,7 @@ const Profile = ({ profileData, setTokenExits }) => {
           </div>
           <div>
             <FaPhoneAlt color="blue" size={"23px"} />{" "}
-            <span style={{marginLeft:'10px'}}>+91 {profileData.Phone}</span>
+            <span style={{marginLeft:'10px'}}>+91 {profileData.Phone.slice(2,)}</span>
           </div>
           <div>
             <span>Invites:{profileData.Invites}</span>

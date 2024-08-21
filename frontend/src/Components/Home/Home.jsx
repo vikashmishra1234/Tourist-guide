@@ -16,10 +16,15 @@ import Footer from "../footer/Footer";
 const Home = () => {
   const Navigate = useNavigate();
   const priests = useSelector((state) => state.PriestData.priests);
+  const loader = useSelector((state)=>state.PriestData.loader)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPriestData());
   }, []);
+
+  if(loader){
+    return <Loading/>
+  }
  
   return (
     <main>

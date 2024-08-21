@@ -63,8 +63,9 @@
       > ul {
         font-size: 20px;
         position: absolute;
-        left: -88px;
-        top: 25%;
+        height: 166px;
+        width: 188px;
+        left: -218px;
         padding: 11px 10px 11px 17px;
         font-family: sans-serif;
         box-shadow: 1px 1px 4px;
@@ -73,7 +74,7 @@
         li {
           list-style-type: none;
           cursor: pointer;
-          margin-top: 10px;
+          margin-top: 28px;
           border-bottom: 0.3px solid lightgray;
           padding-bottom: 2px;
         }
@@ -225,13 +226,12 @@ a {
      }
       .more {
         ul {
-          color: black;
-          border: none;
-        background-color: white;
-        z-index: 10;
-          font-size: 16px;
+          font-size: 18px;
           border-radius: 8px;
-          margin-right:20px ;
+          height: 132px;
+          width: 134px;
+          left: -151px;
+          top: 20px;
         }
       }
      
