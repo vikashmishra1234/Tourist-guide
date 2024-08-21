@@ -36,7 +36,7 @@
       
     }
     .profile-about {
-      margin-left: 12px;
+    
       font-size: 22px;
       width: 650px;
       font-family: sans-serif;
@@ -199,13 +199,13 @@ a {
      .profile-image{
         width: 95%;
         img{
-            width: 76px;
-            height: 74px;
-            border: 1px solid;
+          width: 89px;
+          height: 88px;
+            border: 2px solid lightgray;
         }
         .profile-name{
             font-size: 22px;
-            width: 52%;
+            width: 65%;
             .icon{
                 display: none;
             }
@@ -254,10 +254,26 @@ a {
       }
     }
   }
+  .feedback-form{
+    width: 97%;
+    >div{
+      text-align: center;
+      input,textarea{
+        font-size: 19px;
+        width: 90%;
+      }
+    }
+    button{
+      height: 42px;
+  font-size: 19px;
+  border-radius: 7px;
+    }
+  }
   .feedback-heading {
     width: 90%;
     h3 {
       font-size: 21px;
+      font-family: sans-serif;
     }
   }
 }

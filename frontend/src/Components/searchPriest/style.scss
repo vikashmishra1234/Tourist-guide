@@ -7,17 +7,22 @@
     display: flex;
     flex-direction: column;
    
-    gap: 6px;
+    gap: 10px;
     a{
         text-decoration: none;
-        background: #9498f2;
-        font-size: 19px;
-        border: none;
-        text-align: center;
-        padding: 5px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+    background: #9498f2;
+    font-size: 20px;
+    border: none;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    height: 33px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: sans-serif;    }
 }
 
 @media screen and (max-width:600px){

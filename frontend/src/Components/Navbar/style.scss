@@ -60,6 +60,8 @@ header {
         display: flex;
         flex-direction: column;
         gap: 40px;
+        font-size: 20px;
+        font-family: sans-serif;
       }
   
       
@@ -79,7 +81,7 @@ header {
       top: 46px;
       right: 10px;
       z-index: 101;
-      font-size: 24px;
+      font-size: 30px;
     }
   
     @media (min-width: 601px) {
