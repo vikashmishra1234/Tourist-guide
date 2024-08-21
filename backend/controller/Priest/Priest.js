@@ -6,7 +6,8 @@ const NodeCache = require( "node-cache" );
 const redis = require('../../redisConfig.js')
 
 // JWT secret key
-const JWT_SECRET = 'vikash mishra'; // Replace with your actual secret key
+
+const JWT_SECRET = process.env.JWT_SECRET; // Replace with your actual secret key
 
 
 exports.priestRegistration = async (req, res) => {
@@ -191,9 +192,10 @@ exports.deletePriest = async (req, res) => {
         // Retrieve data from Redis
         const cachedPriests = await redis.get('priests');
         
-        // if (cachedPriests) {
-        //     return res.status(200).json({ success: true, priests: JSON.parse(cachedPriests) });
-        // }
+        if (cachedPriests) {
+           
+            return res.status(200).json({ success: true, priests: JSON.parse(cachedPriests) });
+        }
 
         
         const priests = await Priest.find({});
@@ -203,7 +205,7 @@ exports.deletePriest = async (req, res) => {
         }
 
        
-        // await redis.set('priests', JSON.stringify(priests));
+        await redis.set('priests', JSON.stringify(priests));
 
         
         res.status(200).json({ success: true, priests });

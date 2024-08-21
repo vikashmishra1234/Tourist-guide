@@ -1,19 +1,25 @@
 // config/redisClient.js
-const redis = require('redis');
+const Redis = require("ioredis");
 
-// Create the Redis client
-const redisClient = redis.createClient({
-    host: '127.0.0.1',
-    port: 6379,
-});
+let redisClient;
 
-// Connect to Redis
-redisClient.connect().catch(console.error);  // Redis v4 requires an explicit connect() call
+if (!redisClient) {
+  redisClient = new Redis({
+    password: process.env.REDIS_PASSWORD,
+    host: process.env.REDIS_HOST,
+    port: 16584,
+  });
 
-// Handle Redis errors
-redisClient.on('error', (err) => {
+  redisClient.on('error', (err) => {
     console.error('Redis error:', err);
-});
+  });
+
+  redisClient.on('connect', () => {
+    console.log('Connected to Redis');
+  });
+}
+
+// No need to call connect() explicitly with ioredis as it automatically connects upon instantiation.
 
 // Export the Redis client for use in other files
 module.exports = redisClient;
