@@ -16,7 +16,7 @@ import Footer from "../footer/Footer";
 const Home = () => {
   const Navigate = useNavigate();
   const priests = useSelector((state) => state.PriestData.priests);
-  const loader = useSelector((state)=>state.PriestData.loader)
+  const loader = useSelector((state)=>state.PriestData.loading)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPriestData());
