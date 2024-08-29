@@ -8,7 +8,7 @@ const app = express();
 // app.use(cors());
 app.use(
     cors({
-      origin: ["https://tourist-guide-ashen.vercel.app"],
+      origin: ["https://tourist-guide-ashen.vercel.app","https://priest-finder-web-app.onrender.com"],
       methods: ["POST", "GET", "PUT"],
       credentials: true,
     })
