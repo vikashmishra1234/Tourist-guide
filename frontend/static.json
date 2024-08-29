@@ -1,0 +1,11 @@
+
+{
+  "rewrites": [
+    { "source": "/user/edit", "destination": "/" },
+    { "source": "/priest/find", "destination": "/" },
+    { "source": "/restaurent", "destination": "/" },
+    { "source": "/user", "destination": "/" },
+    { "source": "/register", "destination": "/" },
+    { "source": "/**", "destination": "/" }
+  ]
+}
