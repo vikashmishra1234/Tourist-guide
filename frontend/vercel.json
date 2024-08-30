@@ -1,0 +1,28 @@
+{
+  "routes":[
+        {
+            "src":"/",
+            "dest":"/"
+        },
+        {
+            "src":"/user/edit",
+            "dest":"/"
+        },
+        {
+            "src":"/priest/find",
+            "dest":"/"
+        },
+        {
+            "src":"/restaurent",
+            "dest":"/"
+        },
+        {
+            "src":"/user",
+            "dest":"/"
+        },
+        {
+            "src":"/register",
+            "dest":"/"
+        }
+    ]
+}
