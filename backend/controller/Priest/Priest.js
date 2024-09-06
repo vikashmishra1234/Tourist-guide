@@ -101,6 +101,7 @@ exports.updatePriest = async (req, res) => {
             return res.status(404).json({ error: 'Priest not found', success: false });
         }
         await redis.del("priests")
+         await redis.del(`priest:${req.user.id}`)
         res.status(201).json({
             message: 'Profile Update Successful',
             updatePriest,
