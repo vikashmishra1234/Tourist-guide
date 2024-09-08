@@ -8,13 +8,11 @@ import Cookies from 'js-cookie'
 const Auth = lazy(() => import('./Components/auth/Auth'));
 const Registration = lazy(() => import('./Components/Resgistration/Registration'));
 const SignUp = lazy(() => import('./Components/auth/SignUp'));
-// const SearchPriest = lazy(() => import('./Components/searchPriest/SearchPriest'));
-// const ProfilePriest = lazy(() => import('./Components/searchPriest/ProfilePriest'));
+
 const Footer = lazy(()=>import('./Components/footer/Footer'))
 const ForgetPass = lazy(() => import('./Components/auth/ForgetPass'));
 const Restaurent = lazy(() => import('./Components/Restaurents/Restaurent'));
 const Home = lazy(() => import('./Components/Home/Home'));
-// import Registration from './Components/Resgistration/Registration'
 import SearchPriest from './Components/searchPriest/SearchPriest'
 import ProfilePriest from './Components/searchPriest/ProfilePriest'
 import { Loading } from './Components/Loader';

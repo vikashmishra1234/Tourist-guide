@@ -11,6 +11,7 @@ import { auth } from "../../firebase/setup";
 import './style.scss'
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast } from "react-toastify";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 
 const SignUp = ({ button, heading, user_id }) => {
   const [profile, setProfile] = useState("");
@@ -24,6 +25,8 @@ const SignUp = ({ button, heading, user_id }) => {
   const { priest, setPriest, setTokenExits } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
+
+  const queryClient = new QueryClient();
 
   useEffect(()=>{
     
@@ -55,42 +58,46 @@ const SignUp = ({ button, heading, user_id }) => {
       });
   };
 
+  const update = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['priests']); // Replace with your query key
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: data.message, // Assuming `data.message` contains success message
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      Navigate("/user");
+    },
+    onError: (error) => {
+    toast.error("Something went wrong")
+    },
+  });
+
 
   // handleForm Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(priestFormData.Phone)
-    if(priestFormData.Phone && !isVerify){
+    // if(priestFormData.Phone && !isVerify){
       
-      toast.error("Please Verify the Phone")
+    //   toast.error("Please Verify the Phone")
        
-    }
-    else if (isEdit) {
-     
-      // profile edit code
-      setLoading(true);
-      phone&&(priestFormData.Phone=phone.slice(2,))
-      const res = await updateProfile(priestFormData);
-      setLoading(false);
-      if (res && res.success) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: res.message,
-          showConfirmButton: false,
-          timer: 1100,
-        });
-        Navigate("/user");
-      }
+    // }
+    if (isEdit) {
+      phone&&(priestFormData.Phone=phone.slice(2,));
+      setLoading(true)
+      update.mutate(priestFormData);
+      setLoading(false)
     } 
-    // new User registration if phone is verified
     else  {
       setLoading(true);
-      
-     
       const res = await registration(priestFormData);
       setLoading(false);
       if (res.success) {
+        queryClient.invalidateQueries(['priests']); 
         Cookies.set("priestToken", res.token);
         setTokenExits(true);
         Navigate("/user");
@@ -111,7 +118,6 @@ const SignUp = ({ button, heading, user_id }) => {
 
   //sending an otp to the phone number
   const sendOtp = async () => {
-    console.log(priestFormData.Phone)
     if(!priestFormData.Phone || priestFormData.Phone.length!=12){
       toast.error("Please Enter an valid Phone Number");
       return ;

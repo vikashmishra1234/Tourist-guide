@@ -1,16 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { store } from './Components/redux/store.js';
-import { Provider } from 'react-redux'
-import ContextState from './Context/ContexState.jsx';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import ContextState from "./Context/ContexState.jsx";
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <ContextState>
+const queryClient = new QueryClient();
 
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <QueryClientProvider client={queryClient}>
+
+  <ContextState>
     <App />
-    </ContextState>
-    </Provider>,
-)
+  </ContextState>
+  </QueryClientProvider>
+);

@@ -17,7 +17,7 @@ const getAuthConfig = () => ({
 
 const handleError = (error) => {
     if(error.response.status==404){
-
+            toast.error("Somethin went wrong")
     }
     else if (error.response) {
         console.error('Error message:', error.response.data.error);
@@ -105,6 +105,14 @@ export const getFeedback = async (priestId) => {
 export const addFeedback = async (data) => {
     try {
         const res = await api.post('/add/feedback', data);
+        return res.data;
+    } catch (error) {
+        handleError(error);
+    }
+}
+export const updatePriestInvites = async (id) => {
+    try {
+        const res = await api.put(`/update/invites?priestId=${id}`);
         return res.data;
     } catch (error) {
         handleError(error);

@@ -190,11 +190,11 @@ exports.deletePriest = async (req, res) => {
   }
   exports.getPriests = async (req, res) => {
     try {
-        // Retrieve data from Redis
+      
         const cachedPriests = await redis.get('priests');
         
         if (cachedPriests) {
-           
+          
             return res.status(200).json({ success: true, priests: JSON.parse(cachedPriests) });
         }
 
@@ -229,4 +229,30 @@ exports.deletePriest = async (req, res) => {
     } catch (error) {
         res.status(500).json({error:"Server Error",success:false});
     }
+  }
+
+  exports.increaseInvites = async(req,res)=>{
+   try {
+     const {priestId} = req.query;
+     if(!priestId){
+         return res.status(404).json({
+             success:false,
+             error:'please send the priest id'
+         })
+     }
+ 
+    await Priest.findByIdAndUpdate(priestId, { $inc: { Invites: 1 } });
+    await redis.del("priests")
+    res.status(200).json({
+        success:true,
+        message:"invites updates successfully"
+    })
+   } catch (error) {
+        console.log(error.message)
+        return res.status(500).json({
+            success:false,
+            error:"something went wrong"
+        })
+   }
+
   }

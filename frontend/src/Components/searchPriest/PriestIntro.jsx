@@ -4,10 +4,14 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { Navigate, useNavigate } from 'react-router-dom';
 import { FaWhatsapp } from "react-icons/fa6";
 import '../Resgistration/style.scss'
+import { updatePriestInvites } from '../../Services/Apis';
 
 
 const PriestIntro = ({priest,profile}) => {
     const Navigate = useNavigate();
+    const increaseInvites = async(id)=>{
+        await updatePriestInvites(id);     
+    }
   return (
     <div className='profile-wrapper'>
       {
@@ -43,7 +47,7 @@ const PriestIntro = ({priest,profile}) => {
     !profile?<button onClick={()=>Navigate(`/priest?priestId=${priest._id}`)}>View Profile</button>:
     <div id='btns'>
 
-        <a href={`tel:${priest.Phone}`} > <FaPhoneAlt size={21}/> Invite</a>
+        <a href={`tel:${priest.Phone}`} onClick={()=>increaseInvites(priest._id)} > <FaPhoneAlt size={21}/> Invite</a>
         <a style={{background:'#76e076'}} href={`https://wa.me/${priest.Whatsapp}`} > <FaWhatsapp size={23}/> Invite</a>
     </div>
 

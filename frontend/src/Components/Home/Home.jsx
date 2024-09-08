@@ -12,15 +12,17 @@ import restaurentData from "../../RestaurentData.json";
 import About from "./About";
 import { Loading } from "../Loader";
 import Footer from "../footer/Footer";
+import { useFetchPriests } from "../ReactQuery";
 
 const Home = () => {
   const Navigate = useNavigate();
-  const priests = useSelector((state) => state.PriestData.priests);
-  const loader = useSelector((state)=>state.PriestData.loading)
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchPriestData());
-  }, []);
+  const {data:priests,isLoading:loader} = useFetchPriests()
+  // const priests = useSelector((state) => state.PriestData.priests);
+  // const loader = useSelector((state)=>state.PriestData.loading)
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchPriestData());
+  // }, []);
 
   if(loader){
     return <Loading/>

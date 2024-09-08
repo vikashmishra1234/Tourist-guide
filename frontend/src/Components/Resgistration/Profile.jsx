@@ -6,17 +6,22 @@ import { MdMoreVert } from "react-icons/md";
 import { Navigate, useNavigate } from "react-router-dom";
 import { deleteProfile } from "../../Services/Apis";
 import Cookies from "js-cookie";
+import { QueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+
 
 const Profile = ({ profileData, setTokenExits }) => {
   const [show, setShow] = useState(false);
   const Navigate = useNavigate();
+  const queryClient = new QueryClient();
 
   const handleDelete = async () => {
     const res = await deleteProfile();
     if (res.success) {
       Cookies.remove("priestToken");
       setTokenExits(false);
-      alert(res.message);
+      queryClient.invalidateQueries(['priests'])
+      toast.success("Your Profile is deleted")
       
     }
   };
